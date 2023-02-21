@@ -147,7 +147,6 @@ export default{
     min-height: 700px;
     background-color: #fff;
     margin: 0 auto;
-    padding: 5rem 0;
 }
 
 .search-panel{

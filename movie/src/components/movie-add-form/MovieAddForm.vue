@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-3">
+    <Box>
         <h1 class="h3">Yangi kino qo'shish</h1>
         <form action="" class="d-flex" @submit.prevent>
             <input type="text" class="form-control" placeholder="Qanday kino?"
@@ -9,15 +9,23 @@
                 v-model="viewers"
             >
 
-            <button class="btn btn-outline-dark" type="submit"
+            <PrimaryButton class="btn-outline-dark" type="submit"
                 @click="addMovie"
-            >Qo'shish</button>
+            >Qo'shish</PrimaryButton>
         </form>
-    </div>
+    </Box>
 </template>
 
 <script>
+
+import Box from "@/ui-components/Box.vue";
+import PrimaryButton from "@/ui-components/PrimaryButton.vue";
+
 export default{
+    components:{
+        PrimaryButton,
+        Box
+    },
     data(){
         return {
             name: '',

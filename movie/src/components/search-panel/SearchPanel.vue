@@ -23,7 +23,7 @@ export default{
     methods: {
         changeTermHandler(e){
             this.term = e.target.value
-            this.updateTermHandler(this.term);
+            this.updateTermHandler(this.filter)
         }
     }
 }

@@ -1,12 +1,16 @@
 <template>
-    <div>
+    <Box>
         <p class="h2">Barcha kinolar soni: {{ allMoviesCount }}</p>
         <p class="h2">Ko'rilgan kinolar soni: {{ favouriteMoviesCount  }}</p>
-    </div>
+    </Box>
 </template>
 
 <script>
+
+import Box from "@/ui-components/Box.vue"
+
 export default {
+    components:{Box},
     props:{
         allMoviesCount:{
             type: Number,
