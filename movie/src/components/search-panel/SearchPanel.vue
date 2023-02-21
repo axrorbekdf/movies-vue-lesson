@@ -1,9 +1,9 @@
 <template>
     <div>
-        <input type="text" class="form-control" name="" placeholder="Kinolarni qidirish"
+        <Input placeholder="Kinolarni qidirish"
             v-model="term"
             @input="changeTermHandler"
-        >
+        />
     </div>
 </template>
 

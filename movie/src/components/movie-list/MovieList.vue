@@ -8,12 +8,10 @@
 
 <script>
 import MovieListItem from '@/components/movie-list-item/MovieListItem.vue';
-import Box from '@/ui-components/Box.vue';
 
 export default{
     components: {
-        MovieListItem,
-        Box
+        MovieListItem
     },
     props:{
         movies:{

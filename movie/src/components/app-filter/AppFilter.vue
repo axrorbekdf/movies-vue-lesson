@@ -10,13 +10,7 @@
 
 <script>
 
-
-import PrimaryButton from "@/ui-components/PrimaryButton.vue";
-
 export default{
-    components:{
-        PrimaryButton
-    },
     props:{
         updateFilterHandler:{
             type: Function,

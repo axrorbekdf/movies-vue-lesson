@@ -7,10 +7,7 @@
 
 <script>
 
-import Box from "@/ui-components/Box.vue"
-
 export default {
-    components:{Box},
     props:{
         allMoviesCount:{
             type: Number,

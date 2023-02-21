@@ -2,12 +2,12 @@
     <Box>
         <h1 class="h3">Yangi kino qo'shish</h1>
         <form action="" class="d-flex" @submit.prevent>
-            <input type="text" class="form-control" placeholder="Qanday kino?"
+            <Input placeholder="Qanday kino?"
                 v-model="name"
-            >
-            <input type="number" class="form-control" placeholder="Senchi maratoba ko'rilgan?"
+            />
+            <Input type="number" placeholder="Senchi maratoba ko'rilgan?"
                 v-model="viewers"
-            >
+            />
 
             <PrimaryButton class="btn-outline-dark" type="submit"
                 @click="addMovie"
@@ -18,14 +18,7 @@
 
 <script>
 
-import Box from "@/ui-components/Box.vue";
-import PrimaryButton from "@/ui-components/PrimaryButton.vue";
-
 export default{
-    components:{
-        PrimaryButton,
-        Box
-    },
     data(){
         return {
             name: '',
