@@ -1,7 +1,7 @@
 <template>
     <div class="mt-5">
         <ul class="list-group list-group-flush">
-           <MovieListItem v-for="movie in movies" :movie="movie"/>
+           <MovieListItem v-for="movie in movies" :key="movie.id" :movie="movie" @onToggle="$emit('onToggle', $event)" @onRemove="$emit('onRemove', $event)"/>
         </ul>
     </div>
 </template>

@@ -11,8 +11,8 @@
                 <AppFilter/>
             </div>
 
-            <MovieList :movies="movies"/>
-            <MovieAddForm />
+            <MovieList :movies="movies" @onToggle="toggleHandler" @onRemove = "onRemoveHandler"/>
+            <MovieAddForm @createMovie="createMovie" />
         </div>
     </div>
 </template>
@@ -37,42 +37,73 @@ export default{
         return {
             movies: [
                 {
+                    id: 1,
                     name: 'Omar',
                     viewers: 811,
                     favourite: false,
                     like: true
                 },
                 {
+                    id: 2,
                     name: 'Omar 46a ',
                     viewers: 13,
                     favourite: false,
                     like: false
                 },
                 {
+                    id: 3,
                     name: 'Kelajak 456',
                     viewers: 12,
                     favourite: false,
                     like: false
                 },
                 {
+                    id: 4,
                     name: 'A4465 Kuni',
                     viewers: 3232,
                     favourite: false,
                     like: false
                 },
                 {
+                    id: 5,
                     name: 'Nima gapla?',
                     viewers: 787,
                     favourite: true,
                     like: false
                 },
                 {
+                    id: 6,
                     name: 'Nima gapla?',
                     viewers: 787,
                     favourite: false,
                     like: false
                 },
+                {
+                    id: 7,
+                    name: 'Nima gapla?',
+                    viewers: 787,
+                    favourite: true,
+                    like: false
+                },
             ]
+        }
+    },
+
+    methods:{
+        createMovie(data){
+            this.movies.push(data)
+        },
+        onRemoveHandler(id){
+            this.movies = this.movies.filter(c => c.id != id);
+        },
+        toggleHandler(data){
+
+            this.movies = this.movies.map(item => {
+                if(item.id == data.id){
+                    return {...item, [data.prop]: !item[data.prop]}
+                }
+                return item
+            })
         }
     }
 }
