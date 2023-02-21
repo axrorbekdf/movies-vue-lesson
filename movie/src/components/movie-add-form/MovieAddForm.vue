@@ -3,10 +3,10 @@
         <h1 class="h3">Yangi kino qo'shish</h1>
         <form action="" class="d-flex" @submit.prevent>
             <input type="text" class="form-control" placeholder="Qanday kino?"
-                @input="name = $event.target.value"
+                v-model="name"
             >
             <input type="number" class="form-control" placeholder="Senchi maratoba ko'rilgan?"
-                @input="viewers = $event.target.value"
+                v-model="viewers"
             >
 
             <button class="btn btn-outline-dark" type="submit"
@@ -27,6 +27,9 @@ export default{
 
     methods: {
         addMovie(){
+            
+            if(!this.name || !this.viewers) return false;
+
             const newMovie = {
                 id: Date.now(),
                 name: this.name,

@@ -7,11 +7,11 @@
             />
 
             <div class="search-panel">
-                <SearchPanel/>
-                <AppFilter/>
+                <SearchPanel :updateTermHandler="updateTermHandler"/>
+                <AppFilter :updateFilterHandler="updateFilterHandler" :filterName="filter"/>
             </div>
 
-            <MovieList :movies="movies" @onToggle="toggleHandler" @onRemove = "onRemoveHandler"/>
+            <MovieList :movies="onFilterHandler(onSearchHandler(movies, term), filter)" @onToggle="toggleHandler" @onRemove = "onRemoveHandler"/>
             <MovieAddForm @createMovie="createMovie" />
         </div>
     </div>
@@ -85,7 +85,9 @@ export default{
                     favourite: true,
                     like: false
                 },
-            ]
+            ],
+            term: '',
+            filter: 'all',
         }
     },
 
@@ -104,6 +106,31 @@ export default{
                 }
                 return item
             })
+        },
+        onSearchHandler(arr, term){
+
+            if(arr.length == 0){
+                return arr;
+            }
+
+            return arr.filter(c => c.name.toLowerCase().indexOf(term) > -1);
+        },
+
+        onFilterHandler(arr, filter){
+            switch (filter) {
+                case 'popular':
+                    return arr.filter(c => c.like)
+                case 'mostViewers':
+                    return arr.filter(c => c.viewers > 500)
+                default:
+                    return arr;
+            }
+        },
+        updateTermHandler(term){
+            this.term = term
+        },
+        updateFilterHandler(filter){
+            this.filter = filter
         }
     }
 }
