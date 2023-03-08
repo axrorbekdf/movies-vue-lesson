@@ -21,9 +21,8 @@ export default{
         }
     },
     methods: {
-        changeTermHandler(e){
-            this.term = e.target.value
-            this.updateTermHandler(this.filter)
+        changeTermHandler(){
+            this.updateTermHandler(this.term)
         }
     }
 }

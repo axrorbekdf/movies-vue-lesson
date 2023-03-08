@@ -7,11 +7,47 @@
             />
 
             <div class="search-panel">
-                <SearchPanel :updateTermHandler="updateTermHandler"/>
-                <AppFilter :updateFilterHandler="updateFilterHandler" :filterName="filter"/>
-            </div>
+                <SearchPanel 
+                    :updateTermHandler="updateTermHandler"
+                />
+                <AppFilter 
+                    :updateFilterHandler="updateFilterHandler" :filterName="filter"
+                />
+            </div> 
 
-            <MovieList :movies="onFilterHandler(onSearchHandler(movies, term), filter)" @onToggle="toggleHandler" @onRemove = "onRemoveHandler"/>
+            
+
+            <Box 
+                v-if="!movies.length && !isLoading"
+            >
+                <p class="fs-4 text-center text-danger">Kinolar mavjud emas!</p>
+            </Box>
+
+            <Box 
+                v-else-if="isLoading"
+                class="d-flex justify-content-center"
+            >
+                <Loader/>
+            </Box>
+
+            <div v-else>
+                <Box>
+                        <Pagination 
+                            :pageCount="totalPages" 
+                            :activePage="page" 
+                            :changePage="changePageHandler"/>
+                </Box>
+                <MovieList 
+                    style="margin-top: 0; padding-top: 0"
+                    :movies="onFilterHandler(onSearchHandler(movies, term), filter)" 
+                    @onToggle="toggleHandler" 
+                    @onRemove = "onRemoveHandler"
+                />
+            </div>
+           
+
+            
+
             <MovieAddForm @createMovie="createMovie" />
         </div>
     </div>
@@ -24,6 +60,8 @@ import SearchPanel from '@/components/search-panel/SearchPanel.vue';
 import AppFilter from '@/components/app-filter/AppFilter.vue';
 import MovieList from '@/components/movie-list/MovieList.vue';
 import MovieAddForm from '@/components/movie-add-form/MovieAddForm.vue';
+import Pagination from '@/components/pagination/Pagination.vue';
+import axios from "axios";
 
 export default{
     components: {
@@ -31,66 +69,28 @@ export default{
         SearchPanel,
         AppFilter,
         MovieList,
-        MovieAddForm
+        MovieAddForm,
+        Pagination,
     },
     data(){
         return {
-            movies: [
-                {
-                    id: 1,
-                    name: 'Omar',
-                    viewers: 811,
-                    favourite: false,
-                    like: true
-                },
-                {
-                    id: 2,
-                    name: 'Omar 46a ',
-                    viewers: 13,
-                    favourite: false,
-                    like: false
-                },
-                {
-                    id: 3,
-                    name: 'Kelajak 456',
-                    viewers: 12,
-                    favourite: false,
-                    like: false
-                },
-                {
-                    id: 4,
-                    name: 'A4465 Kuni',
-                    viewers: 3232,
-                    favourite: false,
-                    like: false
-                },
-                {
-                    id: 5,
-                    name: 'Nima gapla?',
-                    viewers: 787,
-                    favourite: true,
-                    like: false
-                },
-                {
-                    id: 6,
-                    name: 'Nima gapla?',
-                    viewers: 787,
-                    favourite: false,
-                    like: false
-                },
-                {
-                    id: 7,
-                    name: 'Nima gapla?',
-                    viewers: 787,
-                    favourite: true,
-                    like: false
-                },
-            ],
+            movies: [],
             term: '',
             filter: 'all',
+            isLoading: false,
+            limit: 10,
+            page: 1,
+            totalPages: 0
         }
     },
-
+    mounted(){
+        this.fetchMovies()
+    },
+    watch: {
+        page(){
+            this.fetchMovies()
+        }
+    },
     methods:{
         createMovie(data){
             this.movies.push(data)
@@ -131,7 +131,40 @@ export default{
         },
         updateFilterHandler(filter){
             this.filter = filter
-        }
+        },
+
+        
+        async fetchMovies(){
+
+            try{
+                this.isLoading = true;
+
+                const response = await axios.get("https://jsonplaceholder.typicode.com/posts", {
+                    params: {
+                        _limit: this.limit,
+                        _page: this.page,
+                    }
+                })
+
+                const newArr = response.data.map(item => ({
+                    id: item.id,
+                    name: item.title,
+                    viewers: item.id*10,
+                    favourite: false,
+                    like: false
+                }))
+                this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit);
+                this.movies = newArr;
+            }catch(error){
+                alert(error.message)
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        changePageHandler(page){
+            this.page = page
+        },
+
     }
 }
 </script>

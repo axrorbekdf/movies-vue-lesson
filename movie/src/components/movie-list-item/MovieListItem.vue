@@ -1,18 +1,30 @@
 <template>
     <li class="list-group-item d-flex justify-content-between align-items-center" :class="[{like:movie.like}, {favourite: movie.favourite}]">
-        <span class="item-pro" @click="$emit('onToggle', {id: movie.id, prop: 'like'})">{{ movie.name }}</span>
+        <span 
+            class="item-pro" 
+            @click="$emit('onToggle', {id: movie.id, prop: 'like'})"
+            style="cursor: pointer;"
+        >
+            {{ movie.name }}
+        </span>
 
-        <input type="text" class="form-control-sm col-2" :value="movie.viewers">
+        <div style="display: inherit;">
+            <input 
+                type="text" 
+                class="form-control-sm col-2" 
+                :value="movie.viewers"
+            >
 
-        <div class="btn-group d-flex justify-content-between align-items-center">
-            <button class="btn-sm btn-cookie" @click="$emit('onToggle', {id: movie.id, prop: 'favourite'})">
-                <i class="fas fa-cookie"></i>
-            </button>
-            <button class="btn-sm btn-trash" @click="$emit('onRemove', movie.id)">
-                <i class="fas fa-trash"></i>
-            </button>
+            <div class="btn-group d-flex justify-content-between align-items-center">
+                <button class="btn-sm btn-cookie" @click="$emit('onToggle', {id: movie.id, prop: 'favourite'})">
+                    <i class="fas fa-cookie"></i>
+                </button>
+                <button class="btn-sm btn-trash" @click="$emit('onRemove', movie.id)">
+                    <i class="fas fa-trash"></i>
+                </button>
 
-            <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
         </div>
     </li>
 </template>
